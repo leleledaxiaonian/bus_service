@@ -1,5 +1,5 @@
 var request=require('request');
-var token=require('../accTok_updater.js');
+var token=require('./accTok_updater.js');
 var config =require('./API_constant.js');
 
 //enable request debug
