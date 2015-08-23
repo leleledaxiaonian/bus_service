@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ./head %>
+<script>
+
+var buildPostUrl=function(){
+
+}
+</script>
+</head>
+<body class="container">
+<header>
+<% include ./header %>
+</header>
+	<p><%= title %></p>
+	<ul>
+<form id="upload_form" action="https://api.weixin.qq.com/cgi-bin/media/upload?access_token=<%= access_token %>&type=" enctype="multipart/form-data" method="post">
+<label for="mr"> <input type="radio" checked="checked" name="media_type" value="image" id="image" /> image（1M，支持JPG格式）</label><br />
+<label for="mrs"> <input type="radio" name="media_type" value="voice" id="voice" /> voice(播放长度不超过60s，支持AMR\MP3格式)</label><br />
+<label for="miss"> <input type="radio" name="media_type" value="video" id="video" /> video(10MB，支持MP4格式) </label><br />
+<label for="ms"> <input type="radio" name="media_type" value="thumb" id="thumb" /> thumb(64KB，支持JPG格式) </label><br />
+<p>
+选择文件<br>
+<input type="file" name="datafile" size="40">
+</p>
+<input type="submit" value="上传">
+</form>
+</ul>
+    
+<footer>
+<% include ./footer %>
+</footer>    
+</body>
+</html>

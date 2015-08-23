@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>大巴预定</title>
+<script type="text/javascript" src="jquery-1.7.2.min.js"></script>
+<script language="javascript" type="text/javascript" src="My97DatePicker/WdatePicker.js"></script>
+<style type="text/css">
+body,div,span,h1,h2,h3,h4,h5,h6,p,hr,dl,dt,dd,ul,ol,li,form,input,button,textarea,img,clear,span,table,tr,td{margin:0;padding:0;outline:none}
+body{font-family:"微软雅黑";}
+ul{ list-style:none;}
+li{ list-style:none;}
+ol{ list-style:none;}
+img{ border:0px;}
+td{border-left:1px solid #ddd;padding:4px 5px;line-height:20px;border-top:1px solid #ddd}
+a{ text-decoration:none; border:0px; outline:none; }
+input{outline:none}
+</style>
+</head>
+<body style="width:auto;">
+<div class="mainbody">
+<input id="directionInput" style="display:none" value="Gucheng to Beijing">
+	<div id="content" style="width:auto;height:56px;top:40px;position:relative">
+    	<ul style="height:56px;width:auto;">
+        	<li id="pickLocation" style="font-size:20px;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px">选择行程：</li>
+			<li id="fromPoint"  style="font-size:24px;color:#d0d0d0;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px">德州</li>
+			<li id="switcher" style="font-size:24px;color:#d0d0d0;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px"><img onClick="onSwitch();" src="icon.jpg"/></li>
+            <li id="toPoint" style="font-size:24px;color:#d0d0d0;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px">北京</li>
+			<li id="datePicker" style="font-size:20px;color:#d0d0d0;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px;width:158px;" >
+				<input id="dateValue" class="Wdate" readonly="readonly" onFocus="WdatePicker({lang:'zh-cn',minDate:new Date(),maxDate:'%y-%M-{%d+30}'})" />
+			</li>
+			<li id="pickDate" style="font-size:20px;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px">选择日期：</li>
+			
+			<li id="submitButton" style="font-size:24px;color:#d0d0d0;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px"><img onClick="submitIt()" src="submit.png"/></li>
+			
+        </ul>
+		<ul id="message" style="height:56px;width:auto;">
+			
+			
+			
+        </ul>
+    </div>
+   
+   
+</div>
+
+<script type="text/javascript">
+   $(function(){
+		var widthTotal = $("#content").width();
+		var toLeft = (widthTotal - 316)/2;
+		var toLeft2 = (widthTotal - 121)/2;
+		$("#pickLocation").css("position","absolute");
+		$("#pickLocation").css("left",toLeft+"px");
+
+		$("#pickDate").css("position","absolute");
+		$("#pickDate").css("left",toLeft+"px");
+		$("#pickDate").css("top","60px");
+
+		$("#datePicker").css("position","absolute");
+		$("#datePicker").css("left",(toLeft+100)+"px");
+		$("#datePicker").css("top","60px");
+
+		$("#fromPoint").css("position","absolute");
+		$("#fromPoint").css("left",(toLeft+100)+"px");
+
+		$("#switcher").css("position","absolute");
+		$("#switcher").css("left",(toLeft+153)+"px");
+
+		$("#toPoint").css("position","absolute");
+		$("#toPoint").css("left",(toLeft+208)+"px");
+
+		$("#submitButton").css("position","absolute");
+		$("#submitButton").css("left",toLeft2+"px");
+		$("#submitButton").css("top","120px");
+
+		$("#message").css("position","absolute");
+		$("#message").css("left","10px");
+		$("#message").css("top","180px");
+
+    });
+	function submitIt(){
+		
+		//http://apis.juhe.cn/train/s2s?start=上海虹桥&end=苏州园区&traintype=g&key=您申请的APPKEY
+		//var url = 'http://apis.juhe.cn/ip/ip2addr';
+		$("#message").html('查询中...');
+		$.getJSON("http://apis.juhe.cn/train/yp?callback=?", {
+		"from" : $("#fromPoint").text(),
+		"to" : $("#toPoint").text(),
+		"dtype" : "json",
+		"date":"2015-09-09",
+		"key" : "bbd34f6253aaa369d99587ae84c28b55"
+		}, function(data) {
+			var lst = data.result;
+			var lstStr = "<tr><th>车次</th><th>出发站</th><th>到站</th><th>起始站</th><th>终点站</th><th>发车时间</th><th>到达时间</th><th>历时</th><th>商务</th><th>一</th><th>二</th><th>软卧</th><th>硬卧</th><th>硬座</th><th>无座</th></tr>";
+			if(lst){
+				for (var i = 0; i < lst.length; i++) {
+					lstStr += "<tr><td>" + lst[i].train_no + "</td><td>" + lst[i].from_station_name + "</td><td>" + lst[i].to_station_name + "</td><td>" + lst[i].start_station_name + "</td><td>" + lst[i].end_station_name + "</td><td>" + lst[i].start_time + "</td><td>" + lst[i].arrive_time + "</td><td>" + lst[i].lishi + "</td><td>" + lst[i].swz_num + "</td><td>" + lst[i].zy_num + "</td><td>" + lst[i].ze_num + "</td><td>" + lst[i].rw_num + "</td><td>" + lst[i].yw_num + "</td><td>" + lst[i].yz_num + "</td><td>" + lst[i].wz_num + "</td></tr>";
+				}
+					$("#message").html(lstStr);
+			}else{
+				$("#message").html('没有结果！');
+			}
+		});
+	}
+	function onSwitch(){
+		var left = $("#fromPoint").text();
+		var right = $("#toPoint").text();
+		$("#fromPoint").html(right);
+		$("#toPoint").html(left);
+		
+		
+	}
+
+
+
+</script>
+</body>
+</html>
+ 

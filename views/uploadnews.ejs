@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>upload</title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <form action="/edit" method="POST" id="upload">
+    </form>
+	<table style="width:50%">
+	<tr>
+      <td><input type="text" name="thumb_media_id" form="upload"/></td>
+      <td><input type="submit" value="新增" form="upload"/></td>
+	</tr>
+	<tr>
+     <td> <input type="text" name="author" form="upload"/></td>
+	</tr>
+	<tr>
+      <td><input type="text" name="title" form="upload"/></td>
+	</tr>
+	<tr>
+     <td> <input type="text" name="content_source_url" form="upload" /></td>
+	</tr>
+	<tr>
+     <td> <input type="text" name="content" form="upload"/></td>
+	</tr>
+	<tr>
+     <td> <input type="text" name="digest" form="upload"/></td>
+	</tr>
+	<tr>
+      <td><input type="text" name="show_cover_pic" form="upload"/></td>
+	</tr>
+
+        </table>	
+    <ul>
+	<form action="/edit/broadcast" method="POST" id="broadcast">
+	<label >news的mediaId</label>
+	<input type="text" name="mediaid" form="broadcast"/>
+	<input type="submit" value="发送" form="broadcast"/>
+	</form>
+    </ul>
+	<ul>
+	<form action="/edit/text" method="POST" id="brdtext">
+	<label >要发送的内容</label>
+	<input type="text" name="txt_content" form="brdtext"/>
+	<input type="submit" value="发送" form="brdtext"/>
+	</form>
+	</ul>
+	<ul>
+	<form action="/edit/temp_msg" method="POST" id="tmpltext">
+	<label >模板消息</label>
+	<input type="text" name="title_content" value="title" form="tmpltext"/>
+	<input type="text" name="msg_content" value="content" form="tmpltext"/>
+	<input type="submit" value="发送" form="tmpltext"/>
+	</form>
+	</ul>
+
+
+	<ul>
+	<form action="/edit/menu_change" method="POST" id="menu">
+	<label >更改公众号菜单(注意这里的json是menu开始的)</label>
+	<textarea type="text" rows="5" cols="40" name="menu_json"  form="menu"><%= menu_jsonStr %></textarea>
+	<input type="submit" value="更改" form="menu"/>
+	</form>
+	</ul>
+	
+	<hr>
+	<ul>
+	<form action="/edit/opener_change" method="POST" id="opener">
+	<label >更改关注消息(用户关注后自动受到的消息)</label>
+	<textarea type="text" rows="5" cols="40" name="opener_content"  form="opener"></textarea>
+	<input type="submit" value="更改" form="opener"/>
+	</form>
+	</ul>
+	
+  </body>
+</html>

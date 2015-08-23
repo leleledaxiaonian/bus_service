@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ./head %>
+</head>
+<body class="container">
+<header>
+<% include ./header %>
+</header>
+	<p><%= title %></p>
+	<ul>
+	<% result.forEach(function(item) { %>
+        <li><%= item.openId %> - <%= item.asscPublicId %></li>
+    <% }); %>
+</ul>
+    
+<footer>
+<% include ./footer %>
+</footer>    
+</body>
+</html>

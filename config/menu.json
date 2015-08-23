@@ -1,0 +1,59 @@
+{  
+      "button": [  
+        {  
+          "name": "大巴",  
+          "sub_button": [  
+            {  
+              "type": "click",  
+              "name": "预定大巴",  
+              "key": "BUS_BOOKING"  
+            },  
+            {  
+              "type": "click",  
+              "name": "大巴线路",  
+              "key": "V1002_BID_PROJECTS"  
+            },  
+            {  
+              "type": "click",  
+              "name": "联系大巴",  
+              "key": "V1003_RETURN_PLAN"  
+            },  
+            {  
+              "type": "click",  
+              "name": "大巴位置",  
+              "key": "V1004_TRANS_DETAIL"  
+            }
+          ]  
+        },  
+        {  
+          "type": "view",  
+          "name": "拼车",  
+          "url":"http://www.qq.com"
+        },  
+        {  
+          "name": "火车信息",  
+          "sub_button": [  
+            {  
+              "type": "view",  
+              "name": "余票查询",  
+              "url":"http://www.qq.com"
+            },  
+            {  
+              "type": "click",  
+              "name": "出租车",  
+              "key": "V1001_GOOD"  
+            },  
+            {  
+              "type": "view",  
+              "name": "火车班次",  
+              "url":"http://www.qq.com"
+            },  
+            {  
+              "type": "view",  
+              "name": "关于",  
+              "url":"http://www.qq.com"
+            }  
+          ]  
+        }  
+      ]  
+}  

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ./head %>
+</head>
+<body class="container">
+<header>
+<% include ./header %>
+</header>
+	<p><%= title %></p>
+
+	<FORM METHOD="POST" ACTION="/user/bookings">
+	<TABLE BORDER="1">
+  	<TR>
+    	<TD>日期</TD>
+    	<TD>
+      	<INPUT TYPE="TEXT" NAME="date" SIZE="20">
+    	</TD>
+  	</TR>
+	<TR>
+    	<TD>微信ID</TD>
+    	<TD>
+      	<INPUT TYPE="TEXT" NAME="openId" SIZE="20">
+    	</TD>
+  	</TR>
+  	<TR>
+    	<TD>班次</TD>
+    	<TD><INPUT TYPE="TEXT" NAME="shift" SIZE="25"></TD>
+ 	 </TR>
+	<TR>
+    	<TD>方向</TD>
+    	<TD><INPUT TYPE="TEXT" NAME="direction" SIZE="25"></TD>
+ 	 </TR>
+	</TABLE>
+	<P><INPUT TYPE="SUBMIT" VALUE="Submit" NAME="B1"></P>
+</FORM>
+
+
+    
+<footer>
+<% include ./footer %>
+</footer>    
+</body>
+</html>
