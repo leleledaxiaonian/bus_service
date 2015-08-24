@@ -6,10 +6,10 @@ var request=require('request');
 
 
 
-function query_leftTicket( content ){
-var departure ="DZP";
-var arrival   ="BJP";
-var date	="2015-08-25";
+function query_leftTicket( date, departure, arrival, cb ){
+var departure =departure;
+var arrival   =arrival;
+var date	=date;
 request(
     { method: 'GET'
     , url: 'https://kyfw.12306.cn/otn/lcxxcx/query?purpose_codes=ADULT&queryDate='+date+"&from_station="+departure+"&to_station="+arrival
@@ -26,11 +26,12 @@ request(
       } else {
         console.log('error: '+ response.statusCode)
         var json_o=JSON.parse(body);
-	console.log(json_o.data.datas.yp_info);
+	cb(json_o);
       }
     }
 )
 
 }	
 
-query_leftTicket("content");
+exports.get_left=query_leftTicket;
+//query_leftTicket("content");

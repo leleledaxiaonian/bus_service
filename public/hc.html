@@ -108,7 +108,7 @@ input{outline:none}
 
 		$("#message").css("position","absolute");
 		$("#message").css("left","10px");
-		$("#message").css("top","180px");
+		$("#message").css("top","110px");
 
     });
 
@@ -136,19 +136,22 @@ input{outline:none}
 			if(mm<10) {
     			mm='0'+mm
 			} 
-
+		
 		today = yyyy+'-'+mm+'-'+dd;
+		//alert(today);
 		var departure ="DZP";
 		var arrival   ="BJP";
-		var querydate
-		if (document.getElementById('dateValue').value != null)
+		var querydate;
+		var showDate;
+		if(document.getElementById('dateValue').value != null && document.getElementById('dateValue').value != ""){
+				
 		 querydate     = document.getElementById('dateValue').value;
-		else
-		 querydate= today;
-		//if(isLeftSeatNumber("--"))
-		//alert("number");
-		//else
-		//alert("not number");
+		 showDate = querydate
+		}
+		else{
+		 querydate=today;
+		  showDate="今天";
+		}
 		if( $("#fromPoint").text() == "德州" && $("#toPoint").text() == "北京" ){
 			departure ="DZP";
 			arrival   ="BJP";	
@@ -158,14 +161,18 @@ input{outline:none}
 			departure ="BJP";
 			arrival   ="DZP";	
 		}
-		url = "https://kyfw.12306.cn/otn/lcxxcx/query?purpose_codes=ADULT&queryDate="+querydate+"&from_station="+departure+"&to_station="+arrival;
-		//http://apis.juhe.cn/train/s?start=上海虹桥&end=苏州园区&traintype=g&key=您申请的APPKEY
-		//var url = 'http://apis.juhe.cn/ip/ip2addr';
+		
+		url = "/12306/query?purpose_codes=ADULT&queryDate="+querydate+"&from_station="+departure+"&to_station="+arrival;
+
 		$("#message").html('查询中...');
 		$.getJSON(url, null, function(data) {
-			var lst = data.result;
-			alert("received\n");
-			var lstStr = "<tr><th>车次</th><th>出发站</th><th>到站</th><th>发车时间</th><th>到达时间</th><th>历时</th><th>商务</th><th>一</th><th>二</th><th>软卧</th><th>硬卧</th><th>硬座</th><th>无座</th></tr>";
+			var lst = data.data.datas;
+			//$.each( data, function( key, val){
+			//alert(key+val);
+			//	}); 
+			//alert(data.data.datas);
+			var lstStr ="<tr><th COLSPAN=8 BGCOLOR=yellow>红色无票，绿色有票， 日期为"+showDate+"</th></tr>"
+			 lstStr += "<tr><th>车次</th><th>从</th><th>到</th><th>发车</th><th>到达</th><th>共</th><th>商务</th><th>特</th><th>一</th><th>二</th><th>高软</th><th>软卧</th><th>硬卧</th><th>软座</th><th>硬座</th><th>无座</th></tr>";
 			if(lst){
 				
 				for (var i = 0; i < lst.length; i++) {
@@ -175,7 +182,7 @@ input{outline:none}
 		else{
 		markAvailable= "class=unavailable";
 		}
-					lstStr += "<tr "+ markAvailable+" ><td>" + lst[i].train_no + "</td><td>" + lst[i].from_station_name + "</td><td>" + lst[i].to_station_name + "</td><td>"+ lst[i].start_time + "</td><td>" + lst[i].arrive_time + "</td><td>" + lst[i].lishi + "</td><td>" + lst[i].swz_num + "</td><td>" + lst[i].zy_num + "</td><td>" + lst[i].ze_num + "</td><td>" + lst[i].rw_num + "</td><td>" + lst[i].yw_num + "</td><td>" + lst[i].yz_num + "</td><td>" + lst[i].wz_num + "</td></tr>";
+					lstStr += "<tr "+ markAvailable+" ><td>" + lst[i].station_train_code + "</td><td>" + lst[i].from_station_name + "</td><td>" + lst[i].to_station_name + "</td><td>"+ lst[i].start_time + "</td><td>" + lst[i].arrive_time + "</td><td>" + lst[i].lishi + "</td><td>" + lst[i].swz_num + "</td><td>"+ lst[i].tz_num + "</td><td>" + lst[i].zy_num + "</td><td>" + lst[i].ze_num + "</td><td>"+ lst[i].gr_num + "</td><td>"+ lst[i].rw_num + "</td><td>" + lst[i].yw_num + "</td><td>"+ lst[i].rz_num +"</td><td>" + lst[i].yz_num + "</td><td>" + lst[i].wz_num + "</td></tr>";
 				}
 					$("#message").html(lstStr);
 			}else{
