@@ -21,11 +21,23 @@ var busClient_routes =require('./cloud/routes/busClient_routes.js');
 var access_token = '';
 var app = express();
 
+//middle ware
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    next();
+}
+
+
+
+
 // App 全局配置
 app.set('views',path.join(__dirname, 'views'));   	// 设置模板目录
 app.set('view engine', 'ejs');    	// 设置 template 引擎
 //app.use(bodyparser);    		// 读取请求 body 的中间件
-
+app.use(allowCrossDomain);
 app.use(express.static('public'));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));

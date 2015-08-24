@@ -124,23 +124,47 @@ input{outline:none}
 	}
 	
 	function submitIt(){
-		
-		if(isLeftSeatNumber("--"))
-		alert("number");
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+
+		if(dd<10) {
+    			dd='0'+dd
+			} 
+
+			if(mm<10) {
+    			mm='0'+mm
+			} 
+
+		today = yyyy+'-'+mm+'-'+dd;
+		var departure ="DZP";
+		var arrival   ="BJP";
+		var querydate
+		if (document.getElementById('dateValue').value != null)
+		 querydate     = document.getElementById('dateValue').value;
 		else
-		alert("not number");
+		 querydate= today;
+		//if(isLeftSeatNumber("--"))
+		//alert("number");
+		//else
+		//alert("not number");
+		if( $("#fromPoint").text() == "德州" && $("#toPoint").text() == "北京" ){
+			departure ="DZP";
+			arrival   ="BJP";	
+		}
 		
-		//http://apis.juhe.cn/train/s2s?start=上海虹桥&end=苏州园区&traintype=g&key=您申请的APPKEY
+		if( $("#fromPoint").text() == "北京" && $("#toPoint").text() == "德州" ){
+			departure ="BJP";
+			arrival   ="DZP";	
+		}
+		url = "https://kyfw.12306.cn/otn/lcxxcx/query?purpose_codes=ADULT&queryDate="+querydate+"&from_station="+departure+"&to_station="+arrival;
+		//http://apis.juhe.cn/train/s?start=上海虹桥&end=苏州园区&traintype=g&key=您申请的APPKEY
 		//var url = 'http://apis.juhe.cn/ip/ip2addr';
 		$("#message").html('查询中...');
-		$.getJSON("http://apis.juhe.cn/train/yp?callback=?", {
-		"from" : $("#fromPoint").text(),
-		"to" : $("#toPoint").text(),
-		"dtype" : "json",
-		"date":document.getElementById('dateValue').value,
-		"key" : "bbd34f6253aaa369d99587ae84c28b55"
-		}, function(data) {
+		$.getJSON(url, null, function(data) {
 			var lst = data.result;
+			alert("received\n");
 			var lstStr = "<tr><th>车次</th><th>出发站</th><th>到站</th><th>发车时间</th><th>到达时间</th><th>历时</th><th>商务</th><th>一</th><th>二</th><th>软卧</th><th>硬卧</th><th>硬座</th><th>无座</th></tr>";
 			if(lst){
 				
