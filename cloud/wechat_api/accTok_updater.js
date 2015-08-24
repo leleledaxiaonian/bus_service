@@ -8,7 +8,7 @@ var appSecret=config.CONFIG.appSecret;
 var appId=config.CONFIG.appId;
 var access_token;
 var expires_in=config.CONFIG.tokUpdateInterval;
-var instance_cnt=0;
+instance_cnt=0;
 
 function get_accTok( ){
 
@@ -28,7 +28,7 @@ function get_accTok( ){
 
 function updater(){
 	var runing =5;
-
+	console.log("updater get called")
   	if( runing >= 1 ){
 		setTimeout(updater, expires_in*1000);
 		console.log(expires_in*1000); 
@@ -45,7 +45,7 @@ exports.get_token= function(){
 
 exports.run=function(){
 instance_cnt++;
-console.log("token server instance"+instance_cnt);
+console.log("token server instance  "+instance_cnt);
 updater();
 console.log("after updater");
 };

@@ -9,7 +9,7 @@ var weixin = require('./cloud/weixin.js');
 //var utils = require('express/node_modules/connect/lib/utils');
 var https = require('https');
 var wechat  =require('wechat');
-var token = require('./cloud/accTok_updater.js');
+var token = require('./cloud/wechat_api/accTok_updater.js');
 var bodyparser = require('body-parser');
 var publish_news = require('./cloud/routes/publish_news.js');
 var session = require('express-session');
@@ -18,44 +18,26 @@ var user_routes = require('./cloud/routes/user_routes.js');
 var busClient_routes =require('./cloud/routes/busClient_routes.js');
 
 
-// 解析微信的 xml 数据
-var xmlBodyParser = function (req, res, next) {
-  if (req._body) return next();
-  req.body = req.body || {};
-
-  // ignore GET
-  if ('GET' == req.method || 'HEAD' == req.method) return next();
-
-  // check Content-Type
-  if ('text/xml' != req.mime) return next();
-
-  // flag as parsed
-  req._body = true;
-
-  // parse
-  var buf = '';
-  req.setEncoding('utf8');
-  req.on('data', function(chunk){ buf += chunk;});
-  req.on('end', function(){  
-    xml2js.parseString(buf, function(err, json) {
-      if (err) {
-          err.status = 400;
-          next(err);
-      } else {
-          req.body = json;
-          next();
-      }
-    });
-  });
-};
 var access_token = '';
 var app = express();
+
+//middle ware
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    next();
+}
+
+
+
 
 // App 全局配置
 app.set('views',path.join(__dirname, 'views'));   	// 设置模板目录
 app.set('view engine', 'ejs');    	// 设置 template 引擎
 //app.use(bodyparser);    		// 读取请求 body 的中间件
-//app.use(xmlBodyParser);
+app.use(allowCrossDomain);
 app.use(express.static('public'));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
@@ -119,21 +101,11 @@ app.use('/location', busClient_routes);
 //post weixin path
 app.post('/weixin', function(req, res) {
 
-//old way to get access token start
-//https.get("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxd5e3f9f30def82fb&secret=0b3971ed1cbcb549713fc1c8fd5c9198", function(res) {
-//  console.log("Got response: " + res.statusCode);
-//  console.log("access token: " + res.body );
+
 	
-//  res.on('data', function (chunk) {
-//	var json=JSON.parse(chunk);
-//	access_token=json.access_token;
-//    console.log('BODY: ' + json.access_token);
-//  });
-//});
-// old way to get access token end 
-//
-access_token=token.get_token();
-weixin.createMenu("config/menu.json", access_token, function(){});
+//not every time 
+//access_token=token.get_token();
+//weixin.createMenu("config/menu.json", access_token, function(){});
 
 
   console.log('post weixin req:', req.body);

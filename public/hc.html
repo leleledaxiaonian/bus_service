@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>大巴预定</title>
+<title>往返北京和故城的火车查询</title>
 <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
 <script language="javascript" type="text/javascript" src="My97DatePicker/WdatePicker.js"></script>
 <style type="text/css">
@@ -17,23 +17,54 @@ img{ border:0px;}
 td{border-left:1px solid #ddd;padding:4px 5px;line-height:20px;border-top:1px solid #ddd}
 a{ text-decoration:none; border:0px; outline:none; }
 input{outline:none}
+.button{
+ text-decoration:none; 
+ text-align:center; 
+ padding:11px 32px; 
+ border:solid 1px #004F72; 
+ -webkit-border-radius:4px;
+ -moz-border-radius:4px; 
+ border-radius: 4px; 
+ font:18px Arial, Helvetica, sans-serif; 
+ font-weight:bold; 
+ color:#E5FFFF; 
+ background-color:#3BA4C7; 
+ background-image: -moz-linear-gradient(top, #3BA4C7 0%, #1982A5 100%); 
+ background-image: -webkit-linear-gradient(top, #3BA4C7 0%, #1982A5 100%); 
+ background-image: -o-linear-gradient(top, #3BA4C7 0%, #1982A5 100%); 
+ background-image: -ms-linear-gradient(top, #3BA4C7 0% ,#1982A5 100%); 
+ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1982A5', endColorstr='#1982A5',GradientType=0 ); 
+ background-image: linear-gradient(top, #3BA4C7 0% ,#1982A5 100%);   
+ -webkit-box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff; 
+ -moz-box-shadow: 0px 0px 2px #bababa,  inset 0px 0px 1px #ffffff;  
+ box-shadow:0px 0px 2px #bababa, inset 0px 0px 1px #ffffff;  
+  }
+.available{
+
+	background-color: green;
+}
+.unavailable{
+
+	background-color: red;
+}
 </style>
 </head>
 <body style="width:auto;">
 <div class="mainbody">
-<input id="directionInput" style="display:none" value="Gucheng to Beijing">
-	<div id="content" style="width:auto;height:56px;top:40px;position:relative">
-    	<ul style="height:56px;width:auto;">
-        	<li id="pickLocation" style="font-size:20px;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px">选择行程：</li>
-			<li id="fromPoint"  style="font-size:24px;color:#d0d0d0;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px">德州</li>
-			<li id="switcher" style="font-size:24px;color:#d0d0d0;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px"><img onClick="onSwitch();" src="icon.jpg"/></li>
-            <li id="toPoint" style="font-size:24px;color:#d0d0d0;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px">北京</li>
-			<li id="datePicker" style="font-size:20px;color:#d0d0d0;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px;width:158px;" >
-				<input id="dateValue" class="Wdate" readonly="readonly" onFocus="WdatePicker({lang:'zh-cn',minDate:new Date(),maxDate:'%y-%M-{%d+30}'})" />
+	<input id="directionInput" style="display:none" value="Gucheng to Beijing">
+		<div id="content" style="width:auto;height:56px;top:40px;position:relative">
+    			<ul style="height:56px;width:auto;">
+        			<li id="pickLocation" style="font-size:20px;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px">来回：</li>
+				<li id="fromPoint"  style="font-size:24px;color:#d0d0d0;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px">德州</li>
+				<li id="switcher" style="font-size:24px;color:#d0d0d0;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px"><img onClick="onSwitch();" src="icon.jpg"/></li>
+            			<li id="toPoint" style="font-size:24px;color:#d0d0d0;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px">北京</li>
+				<li id="datePicker" style="font-size:20px;color:#d0d0d0;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px;width:158px;" >
+				<input id="dateValue" class="Wdate" readonly="readonly" onFocus="WdatePicker({lang:'zh-cn',minDate:new Date(),maxDate:'%y-%M-{%d+70}'})" />
 			</li>
-			<li id="pickDate" style="font-size:20px;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px">选择日期：</li>
+			<li id="pickDate" style="font-size:20px;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px">日期：</li>
 			
-			<li id="submitButton" style="font-size:24px;color:#d0d0d0;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px"><img onClick="submitIt()" src="submit.png"/></li>
+			<li id="submitButton" style="font-size:24px;color:#d0d0d0;text-decoration:none; border:0px; outline:none;height:56px;line-height:56px;background-size:14px 21px">
+			<a href="#" onClick="submitIt()" class="button">查询</a></li>
 			
         </ul>
 		<ul id="message" style="height:56px;width:auto;">
@@ -52,51 +83,99 @@ input{outline:none}
 		var toLeft = (widthTotal - 316)/2;
 		var toLeft2 = (widthTotal - 121)/2;
 		$("#pickLocation").css("position","absolute");
-		$("#pickLocation").css("left",toLeft+"px");
+		$("#pickLocation").css("left",(toLeft-20)+"px");
 
 		$("#pickDate").css("position","absolute");
-		$("#pickDate").css("left",toLeft+"px");
-		$("#pickDate").css("top","60px");
+		$("#pickDate").css("left",(toLeft-20)+"px");
+		$("#pickDate").css("top","45px");
 
 		$("#datePicker").css("position","absolute");
-		$("#datePicker").css("left",(toLeft+100)+"px");
-		$("#datePicker").css("top","60px");
+		$("#datePicker").css("left",(toLeft+40)+"px");
+		$("#datePicker").css("top","45px");
 
 		$("#fromPoint").css("position","absolute");
-		$("#fromPoint").css("left",(toLeft+100)+"px");
+		$("#fromPoint").css("left",(toLeft+40)+"px");
 
 		$("#switcher").css("position","absolute");
-		$("#switcher").css("left",(toLeft+153)+"px");
+		$("#switcher").css("left",(toLeft+89)+"px");
 
 		$("#toPoint").css("position","absolute");
-		$("#toPoint").css("left",(toLeft+208)+"px");
+		$("#toPoint").css("left",(toLeft+138)+"px");
 
 		$("#submitButton").css("position","absolute");
-		$("#submitButton").css("left",toLeft2+"px");
-		$("#submitButton").css("top","120px");
+		$("#submitButton").css("left",(toLeft2+110)+"px");
+		$("#submitButton").css("top","35px");
 
 		$("#message").css("position","absolute");
 		$("#message").css("left","10px");
 		$("#message").css("top","180px");
 
     });
+
+	function isLeftSeatNumber(n){
+		if(typeof(n) != "boolean" && !isNaN(n) ){
+			if( n > 0){
+					return true;
+				}
+			
+		}
+		return false;
+			
+	}
+	
 	function submitIt(){
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+
+		if(dd<10) {
+    			dd='0'+dd
+			} 
+
+			if(mm<10) {
+    			mm='0'+mm
+			} 
+
+		today = yyyy+'-'+mm+'-'+dd;
+		var departure ="DZP";
+		var arrival   ="BJP";
+		var querydate
+		if (document.getElementById('dateValue').value != null)
+		 querydate     = document.getElementById('dateValue').value;
+		else
+		 querydate= today;
+		//if(isLeftSeatNumber("--"))
+		//alert("number");
+		//else
+		//alert("not number");
+		if( $("#fromPoint").text() == "德州" && $("#toPoint").text() == "北京" ){
+			departure ="DZP";
+			arrival   ="BJP";	
+		}
 		
-		//http://apis.juhe.cn/train/s2s?start=上海虹桥&end=苏州园区&traintype=g&key=您申请的APPKEY
+		if( $("#fromPoint").text() == "北京" && $("#toPoint").text() == "德州" ){
+			departure ="BJP";
+			arrival   ="DZP";	
+		}
+		url = "https://kyfw.12306.cn/otn/lcxxcx/query?purpose_codes=ADULT&queryDate="+querydate+"&from_station="+departure+"&to_station="+arrival;
+		//http://apis.juhe.cn/train/s?start=上海虹桥&end=苏州园区&traintype=g&key=您申请的APPKEY
 		//var url = 'http://apis.juhe.cn/ip/ip2addr';
 		$("#message").html('查询中...');
-		$.getJSON("http://apis.juhe.cn/train/yp?callback=?", {
-		"from" : $("#fromPoint").text(),
-		"to" : $("#toPoint").text(),
-		"dtype" : "json",
-		"date":"2015-09-09",
-		"key" : "bbd34f6253aaa369d99587ae84c28b55"
-		}, function(data) {
+		$.getJSON(url, null, function(data) {
 			var lst = data.result;
-			var lstStr = "<tr><th>车次</th><th>出发站</th><th>到站</th><th>起始站</th><th>终点站</th><th>发车时间</th><th>到达时间</th><th>历时</th><th>商务</th><th>一</th><th>二</th><th>软卧</th><th>硬卧</th><th>硬座</th><th>无座</th></tr>";
+			alert("received\n");
+			var lstStr = "<tr><th>车次</th><th>出发站</th><th>到站</th><th>发车时间</th><th>到达时间</th><th>历时</th><th>商务</th><th>一</th><th>二</th><th>软卧</th><th>硬卧</th><th>硬座</th><th>无座</th></tr>";
 			if(lst){
+				
 				for (var i = 0; i < lst.length; i++) {
-					lstStr += "<tr><td>" + lst[i].train_no + "</td><td>" + lst[i].from_station_name + "</td><td>" + lst[i].to_station_name + "</td><td>" + lst[i].start_station_name + "</td><td>" + lst[i].end_station_name + "</td><td>" + lst[i].start_time + "</td><td>" + lst[i].arrive_time + "</td><td>" + lst[i].lishi + "</td><td>" + lst[i].swz_num + "</td><td>" + lst[i].zy_num + "</td><td>" + lst[i].ze_num + "</td><td>" + lst[i].rw_num + "</td><td>" + lst[i].yw_num + "</td><td>" + lst[i].yz_num + "</td><td>" + lst[i].wz_num + "</td></tr>";
+					var markAvailable;
+					if(isLeftSeatNumber(lst[i].swz_num) ||isLeftSeatNumber(lst[i].zy_num) || isLeftSeatNumber(lst[i].ze_num) || isLeftSeatNumber(lst[i].rw_num) || isLeftSeatNumber(lst[i].yw_num) || isLeftSeatNumber(lst[i].yz_num)|| isLeftSeatNumber(lst[i].wz_num) )
+		markAvailable= "class=available";
+		else{
+		markAvailable= "class=unavailable";
+		}
+					lstStr += "<tr "+ markAvailable+" ><td>" + lst[i].train_no + "</td><td>" + lst[i].from_station_name + "</td><td>" + lst[i].to_station_name + "</td><td>"+ lst[i].start_time + "</td><td>" + lst[i].arrive_time + "</td><td>" + lst[i].lishi + "</td><td>" + lst[i].swz_num + "</td><td>" + lst[i].zy_num + "</td><td>" + lst[i].ze_num + "</td><td>" + lst[i].rw_num + "</td><td>" + lst[i].yw_num + "</td><td>" + lst[i].yz_num + "</td><td>" + lst[i].wz_num + "</td></tr>";
 				}
 					$("#message").html(lstStr);
 			}else{
@@ -110,7 +189,8 @@ input{outline:none}
 		$("#fromPoint").html(right);
 		$("#toPoint").html(left);
 	}
-
+	
+	
 
 
 </script>
